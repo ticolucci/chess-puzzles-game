@@ -1,4 +1,5 @@
 import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { theme } from '../styles/theme';
 import { isLightSquare, squareToNotation, Piece } from '../utils/chess-helpers';
 import { SQUARE_SIZE } from '../constants/layout';
