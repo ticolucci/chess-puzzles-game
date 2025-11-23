@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Piece, Square, Move } from '../utils/chess-helpers';
 import { Puzzle } from '../types/puzzle';
 
@@ -9,6 +9,21 @@ interface UsePuzzleState {
   isComplete: boolean;
   isWrong: boolean;
   feedback: string | null;
+  isOpponentMoving: boolean;
+}
+
+// Helper to check if a move index is the player's move
+// Player moves are at even indices (0, 2, 4...) since player always moves first
+function isPlayerMove(moveIndex: number): boolean {
+  return moveIndex % 2 === 0;
+}
+
+// Helper to apply a move to the board
+function applyMove(board: (Piece | null)[][], move: Move): (Piece | null)[][] {
+  const newBoard = board.map((row) => [...row]);
+  newBoard[move.to.row][move.to.col] = newBoard[move.from.row][move.from.col];
+  newBoard[move.from.row][move.from.col] = null;
+  return newBoard;
 }
 
 export function usePuzzle(puzzle: Puzzle) {
@@ -19,11 +34,62 @@ export function usePuzzle(puzzle: Puzzle) {
     isComplete: false,
     isWrong: false,
     feedback: null,
+    isOpponentMoving: false,
   });
+
+  const opponentMoveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (opponentMoveTimeoutRef.current) {
+        clearTimeout(opponentMoveTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Handle opponent's automatic moves
+  useEffect(() => {
+    const { currentMoveIndex, isComplete, isOpponentMoving } = state;
+
+    // If puzzle is complete or already processing opponent move, skip
+    if (isComplete || isOpponentMoving) return;
+
+    // If it's still the player's turn, skip
+    if (isPlayerMove(currentMoveIndex)) return;
+
+    // It's the opponent's turn - play their move automatically
+    const opponentMove = puzzle.solution[currentMoveIndex];
+    if (!opponentMove) return;
+
+    setState((prev) => ({ ...prev, isOpponentMoving: true }));
+
+    // Delay opponent move slightly so player can see what's happening
+    opponentMoveTimeoutRef.current = setTimeout(() => {
+      setState((prev) => {
+        const newBoard = applyMove(prev.board, opponentMove);
+        const nextMoveIndex = prev.currentMoveIndex + 1;
+        const isComplete = nextMoveIndex >= puzzle.solution.length;
+
+        return {
+          ...prev,
+          board: newBoard,
+          currentMoveIndex: nextMoveIndex,
+          isComplete,
+          isOpponentMoving: false,
+          feedback: isComplete ? 'Great job!' : 'Your turn!',
+        };
+      });
+    }, 500);
+  }, [state.currentMoveIndex, state.isComplete, state.isOpponentMoving, puzzle.solution]);
 
   const selectSquare = useCallback(
     (square: Square) => {
-      if (state.isComplete) return;
+      // Don't allow interaction while opponent is moving or puzzle is complete
+      if (state.isComplete || state.isOpponentMoving) return;
+
+      // Don't allow interaction if it's not the player's turn
+      if (!isPlayerMove(state.currentMoveIndex)) return;
 
       const piece = state.board[square.row][square.col];
 
@@ -55,11 +121,7 @@ export function usePuzzle(puzzle: Puzzle) {
         move.to.col === expectedMove.to.col
       ) {
         // Correct move!
-        const newBoard = state.board.map((row) => [...row]);
-        newBoard[move.to.row][move.to.col] =
-          newBoard[move.from.row][move.from.col];
-        newBoard[move.from.row][move.from.col] = null;
-
+        const newBoard = applyMove(state.board, move);
         const nextMoveIndex = state.currentMoveIndex + 1;
         const isComplete = nextMoveIndex >= puzzle.solution.length;
 
@@ -69,6 +131,7 @@ export function usePuzzle(puzzle: Puzzle) {
           currentMoveIndex: nextMoveIndex,
           isComplete,
           isWrong: false,
+          isOpponentMoving: false,
           feedback: isComplete ? 'Great job!' : 'Good move!',
         });
       } else {
@@ -85,6 +148,10 @@ export function usePuzzle(puzzle: Puzzle) {
   );
 
   const reset = useCallback(() => {
+    // Clear any pending opponent move timeout
+    if (opponentMoveTimeoutRef.current) {
+      clearTimeout(opponentMoveTimeoutRef.current);
+    }
     setState({
       board: puzzle.board.map((row) => [...row]),
       selectedSquare: null,
@@ -92,6 +159,7 @@ export function usePuzzle(puzzle: Puzzle) {
       isComplete: false,
       isWrong: false,
       feedback: null,
+      isOpponentMoving: false,
     });
   }, [puzzle]);
 
