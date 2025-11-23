@@ -4,36 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '../styles/theme';
 import { RootStackParamList } from '../../App';
 import { SAMPLE_PUZZLES } from '../data/sample-puzzles';
+import { getDifficultyColor, getDifficultyLabel } from '../utils/difficulty-helpers';
 
 type PuzzleSelectScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'PuzzleSelect'>;
 };
-
-function getDifficultyColor(difficulty: 'easy' | 'medium' | 'hard'): string {
-  switch (difficulty) {
-    case 'easy':
-      return theme.colors.success;
-    case 'medium':
-      return theme.colors.secondary;
-    case 'hard':
-      return theme.colors.error;
-    default:
-      return theme.colors.primary;
-  }
-}
-
-function getDifficultyLabel(difficulty: 'easy' | 'medium' | 'hard'): string {
-  switch (difficulty) {
-    case 'easy':
-      return 'Easy';
-    case 'medium':
-      return 'Medium';
-    case 'hard':
-      return 'Hard';
-    default:
-      return '';
-  }
-}
 
 export function PuzzleSelectScreen({ navigation }: PuzzleSelectScreenProps) {
   return (

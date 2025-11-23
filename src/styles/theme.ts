@@ -4,11 +4,13 @@ export const theme = {
     secondary: '#FFD700',
     success: '#4CAF50',
     error: '#F44336',
+    purple: '#9C27B0',
     white: '#FFFFFF',
     black: '#333333',
     lightSquare: '#F0D9B5',
     darkSquare: '#B58863',
     highlight: '#FFFF00',
+    validMove: '#5B9BD5',
     background: '#E8F4FD',
   },
   spacing: {

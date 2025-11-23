@@ -23,6 +23,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
     board,
     selectedSquare,
     highlightedSquares,
+    validMoveSquares,
     selectSquare,
     isComplete,
     isWrong,
@@ -49,6 +50,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
           board={board}
           selectedSquare={selectedSquare}
           highlightedSquares={highlightedSquares}
+          validMoveSquares={validMoveSquares}
           onSquarePress={selectSquare}
         />
 
@@ -87,7 +89,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
               <BigButton
                 title="Show All"
                 onPress={showSolution}
-                color="#9C27B0"
+                color={theme.colors.purple}
               />
               <BigButton
                 title="Start Over"

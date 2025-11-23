@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import {
   Piece,
   Square,
   Move,
   isLegalMove,
   applyMoveToFen,
+  getValidMoves,
 } from '../utils/chess-helpers';
 import { Puzzle } from '../types/puzzle';
 
@@ -127,8 +128,13 @@ export function usePuzzle(puzzle: Puzzle) {
 
         // First, validate that this is a legal move using chess.js
         if (!isLegalMove(prev.fen, move)) {
-          // Illegal move - deselect without penalty
-          return { ...prev, selectedSquare: null };
+          // Illegal move - show feedback
+          return {
+            ...prev,
+            selectedSquare: null,
+            isWrong: true,
+            feedback: 'That piece cannot move there!',
+          };
         }
 
         const expectedMove = puzzle.solution[prev.currentMoveIndex];
@@ -242,6 +248,12 @@ export function usePuzzle(puzzle: Puzzle) {
     });
   }, [puzzle.solution]);
 
+  // Calculate valid moves for the selected piece using chess.js
+  const validMoveSquares = useMemo(() => {
+    if (!state.selectedSquare) return [];
+    return getValidMoves(state.fen, state.selectedSquare);
+  }, [state.selectedSquare, state.fen]);
+
   return {
     ...state,
     selectSquare,
@@ -250,5 +262,6 @@ export function usePuzzle(puzzle: Puzzle) {
     showNextStep,
     showSolution,
     highlightedSquares: state.selectedSquare ? [state.selectedSquare] : [],
+    validMoveSquares,
   };
 }
