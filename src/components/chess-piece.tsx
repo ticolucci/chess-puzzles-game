@@ -1,35 +1,60 @@
-import { Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Piece } from '../utils/chess-helpers';
 import { SQUARE_SIZE } from '../constants/layout';
+import {
+  WhiteKing,
+  BlackKing,
+  WhiteQueen,
+  BlackQueen,
+  WhiteRook,
+  BlackRook,
+  WhiteBishop,
+  BlackBishop,
+  WhiteKnight,
+  BlackKnight,
+  WhitePawn,
+  BlackPawn,
+} from './piece-svgs';
 
 interface ChessPieceProps {
   piece: Piece;
 }
 
-const PIECE_SYMBOLS: Record<string, string> = {
-  'white-king': '\u2654',
-  'white-queen': '\u2655',
-  'white-rook': '\u2656',
-  'white-bishop': '\u2657',
-  'white-knight': '\u2658',
-  'white-pawn': '\u2659',
-  'black-king': '\u265A',
-  'black-queen': '\u265B',
-  'black-rook': '\u265C',
-  'black-bishop': '\u265D',
-  'black-knight': '\u265E',
-  'black-pawn': '\u265F',
+type PieceComponent = React.FC<{ size: number }>;
+
+const PIECE_COMPONENTS: Record<string, PieceComponent> = {
+  'white-king': WhiteKing,
+  'white-queen': WhiteQueen,
+  'white-rook': WhiteRook,
+  'white-bishop': WhiteBishop,
+  'white-knight': WhiteKnight,
+  'white-pawn': WhitePawn,
+  'black-king': BlackKing,
+  'black-queen': BlackQueen,
+  'black-rook': BlackRook,
+  'black-bishop': BlackBishop,
+  'black-knight': BlackKnight,
+  'black-pawn': BlackPawn,
 };
 
 export function ChessPiece({ piece }: ChessPieceProps) {
-  const symbol = PIECE_SYMBOLS[`${piece.color}-${piece.type}`];
+  const PieceComponent = PIECE_COMPONENTS[`${piece.color}-${piece.type}`];
+  const pieceSize = SQUARE_SIZE * 0.9;
 
-  return <Text style={styles.piece}>{symbol}</Text>;
+  if (!PieceComponent) {
+    return null;
+  }
+
+  return (
+    <View style={styles.container}>
+      <PieceComponent size={pieceSize} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  piece: {
-    fontSize: SQUARE_SIZE * 0.8,
-    textAlign: 'center',
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
