@@ -1,10 +1,9 @@
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { ChessSquare } from './chess-square';
 import { ChessPiece } from './chess-piece';
 import { Piece, Square } from '../utils/chess-helpers';
 import { theme } from '../styles/theme';
-
-const BOARD_SIZE = Math.min(Dimensions.get('window').width - 32, 400);
+import { BOARD_SIZE } from '../constants/layout';
 
 interface ChessBoardProps {
   board: (Piece | null)[][];

@@ -1,9 +1,7 @@
-import { TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { theme } from '../styles/theme';
 import { isLightSquare } from '../utils/chess-helpers';
-
-const BOARD_SIZE = Math.min(Dimensions.get('window').width - 32, 400);
-const SQUARE_SIZE = BOARD_SIZE / 8;
+import { SQUARE_SIZE } from '../constants/layout';
 
 interface ChessSquareProps {
   row: number;
