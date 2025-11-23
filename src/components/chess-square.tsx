@@ -10,6 +10,7 @@ interface ChessSquareProps {
   col: number;
   isHighlighted?: boolean;
   isSelected?: boolean;
+  isValidMove?: boolean;
   onPress: () => void;
   children?: React.ReactNode;
 }
@@ -19,6 +20,7 @@ export function ChessSquare({
   col,
   isHighlighted = false,
   isSelected = false,
+  isValidMove = false,
   onPress,
   children,
 }: ChessSquareProps) {
@@ -29,6 +31,7 @@ export function ChessSquare({
       style={[
         styles.square,
         isLight ? styles.lightSquare : styles.darkSquare,
+        isValidMove && styles.validMove,
         isHighlighted && styles.highlighted,
         isSelected && styles.selected,
       ]}
@@ -56,6 +59,9 @@ const styles = StyleSheet.create({
   highlighted: {
     backgroundColor: theme.colors.highlight,
     opacity: 0.8,
+  },
+  validMove: {
+    backgroundColor: theme.colors.validMove,
   },
   selected: {
     borderWidth: 3,
