@@ -10,6 +10,7 @@ interface UsePuzzleState {
   isWrong: boolean;
   feedback: string | null;
   isOpponentMoving: boolean;
+  isShowingSolution: boolean;
 }
 
 // Helper to check if a move index is the player's move
@@ -35,6 +36,7 @@ export function usePuzzle(puzzle: Puzzle) {
     isWrong: false,
     feedback: null,
     isOpponentMoving: false,
+    isShowingSolution: false,
   });
 
   const opponentMoveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -132,6 +134,7 @@ export function usePuzzle(puzzle: Puzzle) {
           isComplete,
           isWrong: false,
           isOpponentMoving: false,
+          isShowingSolution: false,
           feedback: isComplete ? 'Great job!' : 'Good move!',
         });
       } else {
@@ -160,6 +163,7 @@ export function usePuzzle(puzzle: Puzzle) {
       isWrong: false,
       feedback: null,
       isOpponentMoving: false,
+      isShowingSolution: false,
     });
   }, [puzzle]);
 
@@ -169,11 +173,52 @@ export function usePuzzle(puzzle: Puzzle) {
     }
   }, [puzzle.hint]);
 
+  const showNextStep = useCallback(() => {
+    if (state.isComplete || state.isOpponentMoving) return;
+
+    const nextMove = puzzle.solution[state.currentMoveIndex];
+    if (!nextMove) return;
+
+    const newBoard = applyMove(state.board, nextMove);
+    const nextMoveIndex = state.currentMoveIndex + 1;
+    const isComplete = nextMoveIndex >= puzzle.solution.length;
+
+    setState((prev) => ({
+      ...prev,
+      board: newBoard,
+      currentMoveIndex: nextMoveIndex,
+      isComplete,
+      isShowingSolution: true,
+      feedback: isComplete ? 'Solution complete!' : 'Next move shown',
+    }));
+  }, [state.board, state.currentMoveIndex, state.isComplete, state.isOpponentMoving, puzzle.solution]);
+
+  const showSolution = useCallback(() => {
+    if (state.isComplete) return;
+
+    // Apply all remaining moves
+    let newBoard = state.board;
+    for (let i = state.currentMoveIndex; i < puzzle.solution.length; i++) {
+      newBoard = applyMove(newBoard, puzzle.solution[i]);
+    }
+
+    setState((prev) => ({
+      ...prev,
+      board: newBoard,
+      currentMoveIndex: puzzle.solution.length,
+      isComplete: true,
+      isShowingSolution: true,
+      feedback: 'Here is the solution!',
+    }));
+  }, [state.board, state.currentMoveIndex, state.isComplete, puzzle.solution]);
+
   return {
     ...state,
     selectSquare,
     reset,
     getHint,
+    showNextStep,
+    showSolution,
     highlightedSquares: state.selectedSquare ? [state.selectedSquare] : [],
   };
 }
