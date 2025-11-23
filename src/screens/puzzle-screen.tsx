@@ -87,7 +87,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
               <BigButton
                 title="Show All"
                 onPress={showSolution}
-                color="#9C27B0"
+                color={theme.colors.purple}
               />
               <BigButton
                 title="Start Over"
