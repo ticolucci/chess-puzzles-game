@@ -29,6 +29,8 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
     feedback,
     reset,
     getHint,
+    showNextStep,
+    showSolution,
   } = usePuzzle(puzzle);
 
   return (
@@ -58,17 +60,34 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
 
         <View style={styles.buttons}>
           {isComplete ? (
-            <BigButton
-              title="Next Puzzle"
-              onPress={() => navigation.goBack()}
-              color={theme.colors.success}
-            />
+            <>
+              <BigButton
+                title="Next Puzzle"
+                onPress={() => navigation.goBack()}
+                color={theme.colors.success}
+              />
+              <BigButton
+                title="Start Over"
+                onPress={reset}
+                color={theme.colors.error}
+              />
+            </>
           ) : (
             <>
               <BigButton
                 title="Hint"
                 onPress={getHint}
                 color={theme.colors.secondary}
+              />
+              <BigButton
+                title="Next Step"
+                onPress={showNextStep}
+                color={theme.colors.primary}
+              />
+              <BigButton
+                title="Show All"
+                onPress={showSolution}
+                color="#9C27B0"
               />
               <BigButton
                 title="Start Over"
