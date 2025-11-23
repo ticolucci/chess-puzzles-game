@@ -1,223 +1,333 @@
 {
   "puzzles": [
     {
-      "id": "checkmate_1_basic",
+      "id": "lichess_JjXP4",
+      "category": "Intermediate",
+      "theme": "Kingside Attack",
+      "difficulty": 2,
+      "fen": "r1k4r/1pp3p1/p3Np2/3Pb3/1Q5p/2P3Pq/PP3P1P/R3R1K1 w - - 2 25",
+      "solution": [
+        "h4g3",
+        "f2g3",
+        "h3h2"
+      ],
+      "explanation": "Attacking the king's side often leads to checkmate threats.",
+      "hint": "Attack the king on the right side of the board!"
+    },
+    {
+      "id": "lichess_fChTN",
+      "category": "Intermediate",
+      "theme": "Checkmate in 2",
+      "difficulty": 2,
+      "fen": "8/2p4k/1pP2ppp/pP2p3/P1P3qP/6P1/4rQ2/2R3K1 w - - 4 38",
+      "solution": [
+        "g4g3",
+        "g1f1",
+        "g3g2"
+      ],
+      "explanation": "With the right moves, you can force checkmate in just two turns.",
+      "hint": "You can checkmate in 2 moves. Think ahead!"
+    },
+    {
+      "id": "lichess_w9RIf",
+      "category": "Advanced",
+      "theme": "Sacrifice",
+      "difficulty": 2,
+      "fen": "1r3rk1/pp1b1pp1/4pq1p/8/4N1Pn/3B3Q/PPP2PKP/2R2R2 w - - 9 22",
+      "solution": [
+        "f6f3",
+        "g3h4",
+        "g7g5",
+        "e4g5",
+        "h6g5",
+        "h4g5",
+        "f3h3"
+      ],
+      "explanation": "Sometimes giving up material leads to an even bigger gain!",
+      "hint": "Sometimes giving up a piece leads to something better!"
+    },
+    {
+      "id": "lichess_afT2l",
+      "category": "Intermediate",
+      "theme": "Discovered Attack",
+      "difficulty": 2,
+      "fen": "1k4rr/ppp1n1p1/3p3p/4Nq2/5PP1/P3Q2P/1PP5/3R1RK1 b - - 0 19",
+      "solution": [
+        "e5c6",
+        "e7c6",
+        "e3e6"
+      ],
+      "explanation": "When one piece moves, it reveals an attack from another piece!",
+      "hint": "Moving one piece can reveal an attack from another!"
+    },
+    {
+      "id": "lichess_N62Gj",
       "category": "Beginner",
       "theme": "Checkmate in 1",
-      "difficulty": 1,
-      "fen": "5rk1/ppp2ppp/3p4/8/8/8/PPP2PPP/4R1K1 w - - 0 1",
-      "solution": ["e1e8"],
-      "explanation": "The black king has no escape squares. Move your rook to the 8th rank to deliver checkmate!",
-      "hint": "Look at the back rank. The black king is trapped by its own pawns."
-    },
-    {
-      "id": "checkmate_2_back_rank",
-      "category": "Beginner",
-      "theme": "Checkmate in 1",
-      "difficulty": 1,
-      "fen": "6k1/5ppp/8/8/8/8/5PPP/5RK1 w - - 0 1",
-      "solution": ["f1f8"],
-      "explanation": "This is called a 'back rank mate' - the king is trapped on the back row by its own pawns.",
-      "hint": "The black king can't escape because its own pawns are blocking it."
-    },
-    {
-      "id": "hanging_piece_1",
-      "category": "Beginner",
-      "theme": "Capture Undefended Piece",
-      "difficulty": 1,
-      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 1",
-      "solution": ["f3e5"],
-      "explanation": "The black pawn on e5 is not protected by any piece. Just take it!",
-      "hint": "One of black's center pawns is hanging (undefended)."
-    },
-    {
-      "id": "knight_fork_1",
-      "category": "Beginner",
-      "theme": "Knight Fork",
-      "difficulty": 1,
-      "fen": "r2qk2r/ppp2ppp/2n5/3p4/1b1P4/2N2N2/PPP2PPP/R1BQK2R w KQkq - 0 1",
-      "solution": ["c3d5"],
-      "explanation": "The knight on d5 attacks both the queen on d8 and the bishop on b4 at the same time. This is called a 'fork'!",
-      "hint": "Can your knight jump to a square where it attacks two pieces at once?"
-    },
-    {
-      "id": "knight_fork_2",
-      "category": "Beginner",
-      "theme": "Knight Fork",
       "difficulty": 2,
-      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/3P1N2/PPP2PPP/RNBQKB1R w KQkq - 0 1",
-      "solution": ["f3e5", "c6e5", "d1h5"],
-      "explanation": "First take the pawn with your knight. After black recaptures, your queen can fork the king and the knight on e5!",
-      "hint": "Sometimes you need to set up a fork. What happens if you take the e5 pawn first?"
+      "fen": "r2q1rk1/p1pnbppp/1pbp4/3N4/1PBQP3/7P/PBP2PP1/R4RK1 b - - 3 13",
+      "solution": [
+        "d4g7"
+      ],
+      "explanation": "This is checkmate in one move - the enemy king has no escape!",
+      "hint": "Look for a move that checkmates the king!"
     },
     {
-      "id": "queen_fork_simple",
-      "category": "Beginner",
-      "theme": "Queen Fork",
+      "id": "lichess_oRBKL",
+      "category": "Intermediate",
+      "theme": "Checkmate in 2",
       "difficulty": 2,
-      "fen": "r1b1k2r/pppp1ppp/2n2n2/2b1p1q1/2B1P3/2NP1N2/PPP2PPP/R1BQK2R w KQkq - 0 1",
-      "solution": ["c4f7", "e8f7", "c3d5"],
-      "explanation": "Sacrifice your bishop to remove the defender, then your knight forks the king and queen!",
-      "hint": "What if you could remove that f7 pawn? Then your knight could jump to a powerful square."
+      "fen": "r2q1rk1/pp3p2/n1pb1nNP/3p2Q1/3P1P2/4P3/PP5P/R1B1K2R b KQ - 0 17",
+      "solution": [
+        "g6e7",
+        "g8h8",
+        "g5g7"
+      ],
+      "explanation": "With the right moves, you can force checkmate in just two turns.",
+      "hint": "You can checkmate in 2 moves. Think ahead!"
     },
     {
-      "id": "pin_1_basic",
-      "category": "Intermediate",
-      "theme": "Pin",
+      "id": "lichess_z7luv",
+      "category": "Advanced",
+      "theme": "Checkmate in 3",
       "difficulty": 2,
-      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1",
-      "solution": ["f6e4"],
-      "explanation": "The knight on f6 can safely capture the pawn because the bishop on c4 is pinning the f7 pawn to the king. If the pawn takes your knight, you take the king!",
-      "hint": "Look at the diagonal from c4 to f7. What's stopping the f7 pawn from moving?"
+      "fen": "8/pp4RR/1kp5/8/2PK4/r6B/7r/8 b - - 3 37",
+      "solution": [
+        "g7b7",
+        "b6a5",
+        "b7a7",
+        "a5b4",
+        "h7b7"
+      ],
+      "explanation": "In the endgame, every move counts. Play precisely to win!",
+      "hint": "Force a defender to move away from its duty."
     },
     {
-      "id": "pin_2_absolute",
+      "id": "lichess_kOFHk",
       "category": "Intermediate",
-      "theme": "Pin",
+      "theme": "Win Material",
       "difficulty": 2,
-      "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1",
-      "solution": ["c1g5"],
-      "explanation": "Pin the knight to the queen! The knight on f6 can't move because it would expose the queen to capture.",
-      "hint": "Your bishop can pin the knight. Which diagonal would attack both the knight and the queen?"
+      "fen": "r6k/1q2rpp1/2n4p/1pP1p3/1P1pRP2/1Q1P4/1B4PP/4R1K1 b - - 0 29",
+      "solution": [
+        "e4e7",
+        "c6e7",
+        "b3f7"
+      ],
+      "explanation": "Find the best move to win material or checkmate!",
+      "hint": "Think carefully about what your opponent cannot defend!"
     },
     {
-      "id": "pin_win_material",
+      "id": "lichess_DKbmq",
       "category": "Intermediate",
-      "theme": "Pin",
-      "difficulty": 3,
-      "fen": "r1bq1rk1/ppp2ppp/2n2n2/3p4/1b1P4/2NB1N2/PPP2PPP/R1BQK2R w KQ - 0 1",
-      "solution": ["c1g5", "h7h6", "g5f6", "d8f6"],
-      "explanation": "Pin the knight, and when black tries to kick your bishop away with h6, you can capture the knight. Black's queen has to recapture, winning you the knight!",
-      "hint": "After pinning the knight, black might try to chase your bishop. But can the knight really escape?"
-    },
-    {
-      "id": "skewer_1",
-      "category": "Intermediate",
-      "theme": "Skewer",
+      "theme": "Checkmate in 2",
       "difficulty": 2,
-      "fen": "6k1/5ppp/8/8/8/8/5PPP/4R1K1 b - - 0 1",
-      "solution": ["g8h7", "e1e8"],
-      "explanation": "After the king moves, the rook 'skewers' through where the king was. A skewer is like a reverse pin - you attack a valuable piece, and when it moves, you capture what's behind it.",
-      "hint": "Force the king to move, then see what you can capture on the back rank."
+      "fen": "2r3k1/7p/4pPr1/3p4/5q1P/R1P1Qn2/5PP1/R4NK1 w - - 2 31",
+      "solution": [
+        "f4h4",
+        "f1h2",
+        "h4h2"
+      ],
+      "explanation": "With the right moves, you can force checkmate in just two turns.",
+      "hint": "You can checkmate in 2 moves. Think ahead!"
     },
     {
-      "id": "skewer_2_rook",
-      "category": "Intermediate",
-      "theme": "Skewer",
-      "difficulty": 3,
-      "fen": "3r2k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
-      "solution": ["d1d8", "g8h7", "d8d8"],
-      "explanation": "Check the king with your rook. When the king moves out of check, capture the black rook. The king was 'shielding' the rook!",
-      "hint": "Can you give check and attack the rook at the same time?"
-    },
-    {
-      "id": "discovered_attack_1",
+      "id": "lichess_lL92J",
       "category": "Intermediate",
       "theme": "Discovered Attack",
       "difficulty": 3,
-      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 0 1",
-      "solution": ["f3e5"],
-      "explanation": "When your knight moves to e5, it 'discovers' an attack from your bishop on c4 to the f7 pawn. This is called a discovered attack!",
-      "hint": "Moving your knight will 'unmask' an attack from your bishop. Where can the knight go to also create a threat?"
+      "fen": "8/6p1/5k2/1p3P2/8/1r4PR/3K4/8 b - - 0 53",
+      "solution": [
+        "g3g4",
+        "f5g5",
+        "h3b3"
+      ],
+      "explanation": "When one piece moves, it reveals an attack from another piece!",
+      "hint": "Moving one piece can reveal an attack from another!"
     },
     {
-      "id": "discovered_check",
-      "category": "Intermediate",
-      "theme": "Discovered Attack",
-      "difficulty": 3,
-      "fen": "r2qk2r/ppp2ppp/2n1bn2/3p4/1b1P4/2NB1N2/PPP2PPP/R1BQK2R w KQkq - 0 1",
-      "solution": ["f3e5", "c6e5", "d3f5"],
-      "explanation": "After the knight trades happen, your bishop can move to f5, discovering check from your queen while also attacking the bishop on e6!",
-      "hint": "Think ahead: after some trades in the center, can you discover an attack on the king?"
-    },
-    {
-      "id": "removal_defender_1",
-      "category": "Intermediate",
-      "theme": "Removal of Defender",
-      "difficulty": 3,
-      "fen": "r1bq1rk1/ppp2ppp/2n5/3p4/3Pn3/2N2N2/PPP2PPP/R1BQK2R w KQ - 0 1",
-      "solution": ["c3e4", "d5e4", "f3g5"],
-      "explanation": "The f7 pawn is only defended by the king. Remove the knight on e4 (which could defend), then attack f7 with your knight!",
-      "hint": "The f7 square looks weak. What's stopping you from attacking it? Can you remove that defender?"
-    },
-    {
-      "id": "smothered_mate_setup",
-      "category": "Advanced",
-      "theme": "Smothered Mate",
-      "difficulty": 4,
-      "fen": "6rk/5ppp/8/8/8/8/5nPP/5RNK b - - 0 1",
-      "solution": ["f2h3", "h1h2", "g8g2"],
-      "explanation": "This is the famous 'smothered mate' pattern. The knight forces the king into the corner, then the rook delivers checkmate while the king is trapped by its own pieces!",
-      "hint": "The king needs to be trapped in the corner by its own pieces. Can your knight check the king into h2?"
-    },
-    {
-      "id": "greek_gift_sacrifice",
-      "category": "Advanced",
-      "theme": "Greek Gift Sacrifice",
-      "difficulty": 5,
-      "fen": "r1bq1rk1/ppp2ppp/2n2n2/3p4/1b1P4/2NB1N2/PPPQ1PPP/R1B1K2R w KQ - 0 1",
-      "solution": ["d3h7", "g8h7", "f3g5", "h7g8", "d2h6"],
-      "explanation": "This classic sacrifice is called the 'Greek Gift'. Sacrifice your bishop on h7, bring your knight to g5, then your queen joins the attack on h6, threatening unstoppable checkmate!",
-      "hint": "What if you could remove the h7 pawn? The black king would be very exposed. This sacrifice is one of the most famous patterns in chess!"
-    },
-    {
-      "id": "deflection_1",
-      "category": "Advanced",
-      "theme": "Deflection",
-      "difficulty": 4,
-      "fen": "r4rk1/ppp1qppp/2n5/3p4/3P4/2P2N2/PP3PPP/R1BQR1K1 w - - 0 1",
-      "solution": ["e1e7", "c6e7", "d1d5"],
-      "explanation": "Deflect the knight from defending the d5 square by forcing it to recapture your rook. Then your queen swoops in to win material!",
-      "hint": "The knight on c6 is defending d5. Can you force it away from that defense?"
-    },
-    {
-      "id": "clearance_sacrifice",
-      "category": "Advanced",
-      "theme": "Clearance",
-      "difficulty": 5,
-      "fen": "r2q1rk1/ppp2ppp/2n5/3pPb2/3P4/2PQ4/PP3PPP/R1B2RK1 w - - 0 1",
-      "solution": ["d3h7", "g8h7", "f1h1", "h7g8", "h1h8"],
-      "explanation": "Sacrifice your queen to clear the h-file for your rook! After the king takes on h7 and retreats, your rook delivers checkmate on h8.",
-      "hint": "Sometimes you need to sacrifice a piece just to get it out of the way. What if your queen wasn't blocking your rook?"
-    },
-    {
-      "id": "zugzwang_endgame",
+      "id": "lichess_Q9bI8",
       "category": "Advanced",
       "theme": "Zugzwang",
-      "difficulty": 4,
-      "fen": "8/8/8/8/8/1k6/2p5/2K5 b - - 0 1",
-      "solution": ["b3b4", "c1d2", "c2c1q"],
-      "explanation": "This demonstrates 'zugzwang' - whoever has to move is at a disadvantage. Black's king must advance, allowing the pawn to promote.",
-      "hint": "In endgames, sometimes you want your opponent to move, not you. Here, white's king is perfectly placed to stop the pawn if black doesn't move the king first."
+      "difficulty": 3,
+      "fen": "8/8/4k3/8/6K1/6PR/7r/8 b - - 0 55",
+      "solution": [
+        "g4h3",
+        "e6f5",
+        "h3h4",
+        "f5g6",
+        "h4g4"
+      ],
+      "explanation": "A crushing attack overwhelms the opponent's defenses.",
+      "hint": "You have a winning attack. Find the best move!"
     },
     {
-      "id": "windmill_tactic",
+      "id": "lichess_PeMwU",
+      "category": "Intermediate",
+      "theme": "Winning Attack",
+      "difficulty": 3,
+      "fen": "8/5p1k/5r1r/4Q1KP/5P2/8/8/8 b - - 12 71",
+      "solution": [
+        "e5f6",
+        "h6f6",
+        "g5f6"
+      ],
+      "explanation": "A crushing attack overwhelms the opponent's defenses.",
+      "hint": "You have a winning attack. Find the best move!"
+    },
+    {
+      "id": "lichess_8KsFF",
+      "category": "Intermediate",
+      "theme": "Checkmate in 2",
+      "difficulty": 3,
+      "fen": "7r/1p4k1/3b4/Q3Rb2/p1Pp1p2/P4Pp1/1P3nB1/3R1NKq w - - 1 35",
+      "solution": [
+        "h8h1",
+        "g1g2",
+        "f5h3"
+      ],
+      "explanation": "With the right moves, you can force checkmate in just two turns.",
+      "hint": "You can checkmate in 2 moves. Think ahead!"
+    },
+    {
+      "id": "lichess_xxhd8",
+      "category": "Intermediate",
+      "theme": "Skewer",
+      "difficulty": 3,
+      "fen": "2r5/8/7R/1P1k1p1P/3PpPp1/4r1P1/1Kp5/2R5 b - - 0 53",
+      "solution": [
+        "h6d6",
+        "d4c5",
+        "c1c2",
+        "c5d6",
+        "c2c8"
+      ],
+      "explanation": "A skewer attacks through one piece to another behind it.",
+      "hint": "Attack a valuable piece that must move, revealing what is behind it."
+    },
+    {
+      "id": "lichess_Ox1LX",
+      "category": "Intermediate",
+      "theme": "Win Material",
+      "difficulty": 3,
+      "fen": "3r1rk1/pp3pp1/2p5/4PQp1/7q/2P5/PP2R1K1/5R2 b - - 2 30",
+      "solution": [
+        "f1h1",
+        "h4h1",
+        "g2h1"
+      ],
+      "explanation": "In the endgame, every move counts. Play precisely to win!",
+      "hint": "In the endgame, small advantages matter. Play precisely!"
+    },
+    {
+      "id": "lichess_W6uus",
       "category": "Advanced",
-      "theme": "Windmill",
-      "difficulty": 5,
-      "fen": "6k1/5ppp/8/8/1r6/8/5PPP/R3R1K1 w - - 0 1",
-      "solution": ["e1e8", "g8h7", "e8e7", "h7g8", "e7e8", "g8h7", "e8b8"],
-      "explanation": "This 'windmill' tactic uses repeated discovered checks to win material. Each time you check, you can capture another piece on the way back!",
-      "hint": "You can give check, capture, give check again, capture again... keep the windmill spinning!"
+      "theme": "Deflection",
+      "difficulty": 3,
+      "fen": "rr4k1/2p2pp1/2p1b2p/8/4PPP1/2QPB1qP/1PP5/2KR3R w - - 3 21",
+      "solution": [
+        "a8a1",
+        "c1d2",
+        "g3g2",
+        "e1e2",
+        "g2h1"
+      ],
+      "explanation": "A crushing attack overwhelms the opponent's defenses.",
+      "hint": "Force a defender to move away from its duty."
+    },
+    {
+      "id": "lichess_UwYh2",
+      "category": "Beginner",
+      "theme": "Capture Free Piece",
+      "difficulty": 3,
+      "fen": "1r3rk1/4Qpp1/8/2B1P1p1/P4nP1/1q3B2/5P2/2RR1K2 w - - 3 38",
+      "solution": [
+        "b3f3",
+        "g5f4",
+        "f3f4"
+      ],
+      "explanation": "An undefended piece is free to capture!",
+      "hint": "One of their pieces is undefended. Grab it!"
+    },
+    {
+      "id": "lichess_nB7hK",
+      "category": "Intermediate",
+      "theme": "Win Material",
+      "difficulty": 3,
+      "fen": "rn1q1rk1/pp4pp/2p1b3/3np1N1/1PBb1p2/P2P2Q1/2PB1PPP/1R2K1NR w K - 0 14",
+      "solution": [
+        "f4g3",
+        "e6d8",
+        "g3f2"
+      ],
+      "explanation": "Find the best move to win material or checkmate!",
+      "hint": "Think carefully about what your opponent cannot defend!"
+    },
+    {
+      "id": "lichess_UR6NN",
+      "category": "Intermediate",
+      "theme": "Win Material",
+      "difficulty": 3,
+      "fen": "2r3k1/5pp1/7p/p7/P2P1B2/1p3N1P/5PP1/1rN1R1K1 w - - 0 31",
+      "solution": [
+        "b3b2",
+        "c1d3",
+        "b1e1"
+      ],
+      "explanation": "In the endgame, every move counts. Play precisely to win!",
+      "hint": "In the endgame, small advantages matter. Play precisely!"
+    },
+    {
+      "id": "lichess_KtHOK",
+      "category": "Intermediate",
+      "theme": "Winning Attack",
+      "difficulty": 3,
+      "fen": "r2q1r2/p1pn1kbp/1pQ2np1/5p2/3P4/2NP4/PPPB2PP/1R3RK1 b - - 0 15",
+      "solution": [
+        "c6c4",
+        "f6d5",
+        "c4d5"
+      ],
+      "explanation": "A crushing attack overwhelms the opponent's defenses.",
+      "hint": "You have a winning attack. Find the best move!"
     }
   ],
   "categories": {
     "Beginner": {
-      "description": "Learn to spot basic tactics and checkmates",
-      "themes": ["Checkmate in 1", "Capture Undefended Piece", "Knight Fork", "Queen Fork"]
+      "description": "Simple tactics perfect for learning the basics",
+      "themes": [
+        "Checkmate in 1",
+        "Capture Free Piece",
+        "Fork",
+        "Back Rank Mate",
+        "Pawn Promotion"
+      ]
     },
     "Intermediate": {
-      "description": "Understand pins, skewers, and multi-move combinations",
-      "themes": ["Pin", "Skewer", "Discovered Attack", "Removal of Defender"]
+      "description": "Learn pins, skewers, and discovered attacks",
+      "themes": [
+        "Checkmate in 2",
+        "Pin",
+        "Skewer",
+        "Discovered Attack",
+        "Winning Attack",
+        "Endgame"
+      ]
     },
     "Advanced": {
-      "description": "Master complex sacrifices and famous tactical patterns",
-      "themes": ["Smothered Mate", "Greek Gift Sacrifice", "Deflection", "Clearance", "Zugzwang", "Windmill"]
+      "description": "Master complex sacrifices and deep calculations",
+      "themes": [
+        "Checkmate in 3+",
+        "Sacrifice",
+        "Deflection",
+        "Attraction",
+        "Zugzwang"
+      ]
     }
   },
   "metadata": {
-    "version": "1.0",
+    "version": "2.0",
     "total_puzzles": 20,
+    "source": "lichess.org",
     "created_for": "educational_purposes",
     "notation": "solution moves are in UCI format (e.g., 'e2e4' means move from e2 to e4)"
   }
