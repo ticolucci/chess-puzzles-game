@@ -1,3 +1,5 @@
+import { Chess } from 'chess.js';
+
 export type PieceType = 'king' | 'queen' | 'rook' | 'bishop' | 'knight' | 'pawn';
 export type PieceColor = 'white' | 'black';
 
@@ -117,4 +119,46 @@ export function parseUciMove(uci: string): Move {
   const from = notationToSquare(uci.slice(0, 2));
   const to = notationToSquare(uci.slice(2, 4));
   return { from, to };
+}
+
+/**
+ * Validates if a move is legal using chess.js
+ * @param fen The current position in FEN format
+ * @param move The move to validate
+ * @returns true if the move is legal, false otherwise
+ */
+export function isLegalMove(fen: string, move: Move): boolean {
+  try {
+    const chess = new Chess(fen);
+    const from = squareToNotation(move.from);
+    const to = squareToNotation(move.to);
+
+    // Get all legal moves and check if our move is among them
+    const legalMoves = chess.moves({ verbose: true });
+    return legalMoves.some((m) => m.from === from && m.to === to);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Applies a move to a FEN string and returns the new FEN
+ * @param fen The current position in FEN format
+ * @param move The move to apply
+ * @returns The new FEN string, or null if the move is invalid
+ */
+export function applyMoveToFen(fen: string, move: Move): string | null {
+  try {
+    const chess = new Chess(fen);
+    const from = squareToNotation(move.from);
+    const to = squareToNotation(move.to);
+
+    const result = chess.move({ from, to, promotion: 'q' }); // Auto-promote to queen
+    if (result) {
+      return chess.fen();
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }

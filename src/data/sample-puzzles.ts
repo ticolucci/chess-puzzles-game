@@ -27,6 +27,7 @@ function convertJsonPuzzle(json: JsonPuzzle): Puzzle {
     id: json.id,
     title: json.theme,
     difficulty: mapDifficulty(json.difficulty),
+    fen: json.fen,
     board,
     playerColor: activeColor,
     solution,
