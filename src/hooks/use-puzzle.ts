@@ -87,67 +87,68 @@ export function usePuzzle(puzzle: Puzzle) {
 
   const selectSquare = useCallback(
     (square: Square) => {
-      // Don't allow interaction while opponent is moving or puzzle is complete
-      if (state.isComplete || state.isOpponentMoving) return;
+      setState((prev) => {
+        // Don't allow interaction while opponent is moving or puzzle is complete
+        if (prev.isComplete || prev.isOpponentMoving) return prev;
 
-      // Don't allow interaction if it's not the player's turn
-      if (!isPlayerMove(state.currentMoveIndex)) return;
+        // Don't allow interaction if it's not the player's turn
+        if (!isPlayerMove(prev.currentMoveIndex)) return prev;
 
-      const piece = state.board[square.row][square.col];
+        const piece = prev.board[square.row][square.col];
 
-      // If no square selected and clicking on own piece, select it
-      if (!state.selectedSquare) {
-        if (piece && piece.color === puzzle.playerColor) {
-          setState((prev) => ({ ...prev, selectedSquare: square }));
+        // If no square selected and clicking on own piece, select it
+        if (!prev.selectedSquare) {
+          if (piece && piece.color === puzzle.playerColor) {
+            return { ...prev, selectedSquare: square };
+          }
+          return prev;
         }
-        return;
-      }
 
-      // If clicking same square, deselect
-      if (
-        state.selectedSquare.row === square.row &&
-        state.selectedSquare.col === square.col
-      ) {
-        setState((prev) => ({ ...prev, selectedSquare: null }));
-        return;
-      }
+        // If clicking same square, deselect
+        if (
+          prev.selectedSquare.row === square.row &&
+          prev.selectedSquare.col === square.col
+        ) {
+          return { ...prev, selectedSquare: null };
+        }
 
-      // Try to make a move
-      const move: Move = { from: state.selectedSquare, to: square };
-      const expectedMove = puzzle.solution[state.currentMoveIndex];
+        // Try to make a move
+        const move: Move = { from: prev.selectedSquare, to: square };
+        const expectedMove = puzzle.solution[prev.currentMoveIndex];
 
-      if (
-        move.from.row === expectedMove.from.row &&
-        move.from.col === expectedMove.from.col &&
-        move.to.row === expectedMove.to.row &&
-        move.to.col === expectedMove.to.col
-      ) {
-        // Correct move!
-        const newBoard = applyMove(state.board, move);
-        const nextMoveIndex = state.currentMoveIndex + 1;
-        const isComplete = nextMoveIndex >= puzzle.solution.length;
+        if (
+          move.from.row === expectedMove.from.row &&
+          move.from.col === expectedMove.from.col &&
+          move.to.row === expectedMove.to.row &&
+          move.to.col === expectedMove.to.col
+        ) {
+          // Correct move!
+          const newBoard = applyMove(prev.board, move);
+          const nextMoveIndex = prev.currentMoveIndex + 1;
+          const isComplete = nextMoveIndex >= puzzle.solution.length;
 
-        setState({
-          board: newBoard,
-          selectedSquare: null,
-          currentMoveIndex: nextMoveIndex,
-          isComplete,
-          isWrong: false,
-          isOpponentMoving: false,
-          isShowingSolution: false,
-          feedback: isComplete ? 'Great job!' : 'Good move!',
-        });
-      } else {
-        // Wrong move
-        setState((prev) => ({
-          ...prev,
-          selectedSquare: null,
-          isWrong: true,
-          feedback: 'Try again!',
-        }));
-      }
+          return {
+            board: newBoard,
+            selectedSquare: null,
+            currentMoveIndex: nextMoveIndex,
+            isComplete,
+            isWrong: false,
+            isOpponentMoving: false,
+            isShowingSolution: false,
+            feedback: isComplete ? 'Great job!' : 'Good move!',
+          };
+        } else {
+          // Wrong move
+          return {
+            ...prev,
+            selectedSquare: null,
+            isWrong: true,
+            feedback: 'Try again!',
+          };
+        }
+      });
     },
-    [state, puzzle]
+    [puzzle.playerColor, puzzle.solution]
   );
 
   const reset = useCallback(() => {
@@ -174,43 +175,47 @@ export function usePuzzle(puzzle: Puzzle) {
   }, [puzzle.hint]);
 
   const showNextStep = useCallback(() => {
-    if (state.isComplete || state.isOpponentMoving) return;
+    setState((prev) => {
+      if (prev.isComplete || prev.isOpponentMoving) return prev;
 
-    const nextMove = puzzle.solution[state.currentMoveIndex];
-    if (!nextMove) return;
+      const nextMove = puzzle.solution[prev.currentMoveIndex];
+      if (!nextMove) return prev;
 
-    const newBoard = applyMove(state.board, nextMove);
-    const nextMoveIndex = state.currentMoveIndex + 1;
-    const isComplete = nextMoveIndex >= puzzle.solution.length;
+      const newBoard = applyMove(prev.board, nextMove);
+      const nextMoveIndex = prev.currentMoveIndex + 1;
+      const isComplete = nextMoveIndex >= puzzle.solution.length;
 
-    setState((prev) => ({
-      ...prev,
-      board: newBoard,
-      currentMoveIndex: nextMoveIndex,
-      isComplete,
-      isShowingSolution: true,
-      feedback: isComplete ? 'Solution complete!' : 'Next move shown',
-    }));
-  }, [state.board, state.currentMoveIndex, state.isComplete, state.isOpponentMoving, puzzle.solution]);
+      return {
+        ...prev,
+        board: newBoard,
+        currentMoveIndex: nextMoveIndex,
+        isComplete,
+        isShowingSolution: true,
+        feedback: isComplete ? 'Solution complete!' : 'Next move shown',
+      };
+    });
+  }, [puzzle.solution]);
 
   const showSolution = useCallback(() => {
-    if (state.isComplete) return;
+    setState((prev) => {
+      if (prev.isComplete) return prev;
 
-    // Apply all remaining moves
-    let newBoard = state.board;
-    for (let i = state.currentMoveIndex; i < puzzle.solution.length; i++) {
-      newBoard = applyMove(newBoard, puzzle.solution[i]);
-    }
+      // Apply all remaining moves
+      let newBoard = prev.board;
+      for (let i = prev.currentMoveIndex; i < puzzle.solution.length; i++) {
+        newBoard = applyMove(newBoard, puzzle.solution[i]);
+      }
 
-    setState((prev) => ({
-      ...prev,
-      board: newBoard,
-      currentMoveIndex: puzzle.solution.length,
-      isComplete: true,
-      isShowingSolution: true,
-      feedback: 'Here is the solution!',
-    }));
-  }, [state.board, state.currentMoveIndex, state.isComplete, puzzle.solution]);
+      return {
+        ...prev,
+        board: newBoard,
+        currentMoveIndex: puzzle.solution.length,
+        isComplete: true,
+        isShowingSolution: true,
+        feedback: 'Here is the solution!',
+      };
+    });
+  }, [puzzle.solution]);
 
   return {
     ...state,
