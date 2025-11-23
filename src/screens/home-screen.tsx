@@ -27,8 +27,8 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             color={theme.colors.success}
           />
           <BigButton
-            title="Easy Puzzles"
-            onPress={() => navigation.navigate('Puzzle', { puzzleId: 'easy-1' })}
+            title="Choose Puzzle"
+            onPress={() => navigation.navigate('PuzzleSelect')}
             color={theme.colors.primary}
           />
         </View>
