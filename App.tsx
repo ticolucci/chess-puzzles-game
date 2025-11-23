@@ -5,10 +5,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { HomeScreen } from './src/screens/home-screen';
 import { PuzzleScreen } from './src/screens/puzzle-screen';
+import { PuzzleSelectScreen } from './src/screens/puzzle-select-screen';
 import { theme } from './src/styles/theme';
 
 export type RootStackParamList = {
   Home: undefined;
+  PuzzleSelect: undefined;
   Puzzle: { puzzleId?: string };
 };
 
@@ -31,6 +33,11 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{ title: 'Chess Puzzles' }}
+          />
+          <Stack.Screen
+            name="PuzzleSelect"
+            component={PuzzleSelectScreen}
+            options={{ title: 'Choose Puzzle' }}
           />
           <Stack.Screen
             name="Puzzle"
