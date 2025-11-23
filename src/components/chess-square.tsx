@@ -1,11 +1,18 @@
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { theme } from '../styles/theme';
-import { isLightSquare } from '../utils/chess-helpers';
+import { isLightSquare, squareToNotation, Piece } from '../utils/chess-helpers';
 import { SQUARE_SIZE } from '../constants/layout';
+
+// Get piece name for accessibility
+function getPieceName(piece: Piece | null): string {
+  if (!piece) return 'empty';
+  return `${piece.color} ${piece.type}`;
+}
 
 interface ChessSquareProps {
   row: number;
   col: number;
+  piece?: Piece | null;
   isHighlighted?: boolean;
   isSelected?: boolean;
   isValidMove?: boolean;
@@ -16,6 +23,7 @@ interface ChessSquareProps {
 export function ChessSquare({
   row,
   col,
+  piece = null,
   isHighlighted = false,
   isSelected = false,
   isValidMove = false,
@@ -23,6 +31,13 @@ export function ChessSquare({
   children,
 }: ChessSquareProps) {
   const isLight = isLightSquare(row, col);
+  const squareName = squareToNotation({ row, col });
+  const pieceName = getPieceName(piece);
+
+  // Build accessibility label
+  let accessibilityLabel = `${squareName}, ${pieceName}`;
+  if (isSelected) accessibilityLabel += ', selected';
+  if (isHighlighted) accessibilityLabel += ', highlighted';
 
   return (
     <TouchableOpacity
@@ -35,6 +50,9 @@ export function ChessSquare({
       ]}
       onPress={onPress}
       activeOpacity={0.7}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessibilityHint={piece ? `Tap to ${isSelected ? 'deselect' : 'select'} ${pieceName}` : 'Tap to move here'}
     >
       {children}
     </TouchableOpacity>

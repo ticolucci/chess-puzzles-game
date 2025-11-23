@@ -47,6 +47,7 @@ export function ChessBoard({
               key={`${row}-${col}`}
               row={row}
               col={col}
+              piece={piece}
               isHighlighted={isHighlighted(row, col)}
               isSelected={isSelected(row, col)}
               isValidMove={isValidMoveSquare(row, col)}
