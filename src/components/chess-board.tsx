@@ -1,9 +1,12 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, useMemo } from 'react-native';
 import { ChessSquare } from './chess-square';
 import { ChessPiece } from './chess-piece';
 import { Piece, Square } from '../utils/chess-helpers';
 import { theme } from '../styles/theme';
 import { BOARD_SIZE } from '../constants/layout';
+
+// Helper to create a unique key for a square position
+const squareKey = (row: number, col: number) => `${row}-${col}`;
 
 interface ChessBoardProps {
   board: (Piece | null)[][];
@@ -20,8 +23,14 @@ export function ChessBoard({
   validMoveSquares,
   onSquarePress,
 }: ChessBoardProps) {
+  // Use Set for O(1) lookup instead of O(n) array.some()
+  const highlightedSet = useMemo(
+    () => new Set(highlightedSquares.map((s) => squareKey(s.row, s.col))),
+    [highlightedSquares]
+  );
+
   const isHighlighted = (row: number, col: number) =>
-    highlightedSquares.some((s) => s.row === row && s.col === col);
+    highlightedSet.has(squareKey(row, col));
 
   const isSelected = (row: number, col: number) =>
     selectedSquare?.row === row && selectedSquare?.col === col;
