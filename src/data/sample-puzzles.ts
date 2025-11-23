@@ -1,65 +1,39 @@
 import { Puzzle } from '../types/puzzle';
+import { parseFen, parseUciMove } from '../utils/chess-helpers';
+import puzzlesData from '../../data/puzzles.json';
 
-// Simple checkmate puzzles for beginners
-export const SAMPLE_PUZZLES: Puzzle[] = [
-  {
-    id: 'easy-1',
-    title: 'Checkmate in 1',
-    difficulty: 'easy',
-    playerColor: 'white',
-    hint: 'Use your Queen!',
-    board: [
-      [null, null, null, null, { type: 'king', color: 'black' }, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [{ type: 'queen', color: 'white' }, null, null, null, { type: 'king', color: 'white' }, null, null, null],
-    ],
-    solution: [
-      { from: { row: 7, col: 0 }, to: { row: 0, col: 0 } }, // Queen to a8, checkmate
-    ],
-  },
-  {
-    id: 'easy-2',
-    title: 'Rook Checkmate',
-    difficulty: 'easy',
-    playerColor: 'white',
-    hint: 'Move your Rook!',
-    board: [
-      [null, null, null, null, { type: 'king', color: 'black' }, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, { type: 'king', color: 'white' }, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [{ type: 'rook', color: 'white' }, null, null, null, null, null, null, null],
-    ],
-    solution: [
-      { from: { row: 7, col: 0 }, to: { row: 0, col: 0 } }, // Rook to a8, checkmate
-    ],
-  },
-  {
-    id: 'easy-3',
-    title: 'Back Rank Mate',
-    difficulty: 'easy',
-    playerColor: 'white',
-    hint: 'Attack the back row!',
-    board: [
-      [null, null, null, null, null, null, { type: 'king', color: 'black' }, null],
-      [null, null, null, null, null, { type: 'pawn', color: 'black' }, { type: 'pawn', color: 'black' }, { type: 'pawn', color: 'black' }],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, null, null, null, null],
-      [null, null, null, null, { type: 'rook', color: 'white' }, null, null, { type: 'king', color: 'white' }],
-    ],
-    solution: [
-      { from: { row: 7, col: 4 }, to: { row: 0, col: 4 } }, // Rook to e8, checkmate
-    ],
-  },
-];
+interface JsonPuzzle {
+  id: string;
+  category: string;
+  theme: string;
+  difficulty: number;
+  fen: string;
+  solution: string[];
+  explanation: string;
+  hint: string;
+}
+
+function mapDifficulty(level: number): 'easy' | 'medium' | 'hard' {
+  if (level <= 2) return 'easy';
+  if (level <= 3) return 'medium';
+  return 'hard';
+}
+
+function convertJsonPuzzle(json: JsonPuzzle): Puzzle {
+  const { board, activeColor } = parseFen(json.fen);
+  const solution = json.solution.map(parseUciMove);
+
+  return {
+    id: json.id,
+    title: json.theme,
+    difficulty: mapDifficulty(json.difficulty),
+    board,
+    playerColor: activeColor,
+    solution,
+    hint: json.hint,
+  };
+}
+
+export const SAMPLE_PUZZLES: Puzzle[] = (
+  puzzlesData.puzzles as JsonPuzzle[]
+).map(convertJsonPuzzle);

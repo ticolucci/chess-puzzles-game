@@ -62,3 +62,59 @@ export function getInitialBoard(): (Piece | null)[][] {
 
   return board;
 }
+
+const fenPieceMap: Record<string, Piece> = {
+  k: { type: 'king', color: 'black' },
+  q: { type: 'queen', color: 'black' },
+  r: { type: 'rook', color: 'black' },
+  b: { type: 'bishop', color: 'black' },
+  n: { type: 'knight', color: 'black' },
+  p: { type: 'pawn', color: 'black' },
+  K: { type: 'king', color: 'white' },
+  Q: { type: 'queen', color: 'white' },
+  R: { type: 'rook', color: 'white' },
+  B: { type: 'bishop', color: 'white' },
+  N: { type: 'knight', color: 'white' },
+  P: { type: 'pawn', color: 'white' },
+};
+
+export function parseFen(fen: string): {
+  board: (Piece | null)[][];
+  activeColor: 'white' | 'black';
+} {
+  const parts = fen.split(' ');
+  const boardPart = parts[0];
+  const activeColorPart = parts[1] || 'w';
+
+  const board: (Piece | null)[][] = Array(8)
+    .fill(null)
+    .map(() => Array(8).fill(null));
+
+  const ranks = boardPart.split('/');
+  for (let row = 0; row < 8; row++) {
+    let col = 0;
+    const rank = ranks[row];
+    for (const char of rank) {
+      if (/\d/.test(char)) {
+        col += parseInt(char, 10);
+      } else {
+        const piece = fenPieceMap[char];
+        if (piece) {
+          board[row][col] = { ...piece };
+        }
+        col++;
+      }
+    }
+  }
+
+  return {
+    board,
+    activeColor: activeColorPart === 'w' ? 'white' : 'black',
+  };
+}
+
+export function parseUciMove(uci: string): Move {
+  const from = notationToSquare(uci.slice(0, 2));
+  const to = notationToSquare(uci.slice(2, 4));
+  return { from, to };
+}
