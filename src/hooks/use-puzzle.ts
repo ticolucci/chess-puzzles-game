@@ -1,9 +1,16 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { Piece, Square, Move } from '../utils/chess-helpers';
+import {
+  Piece,
+  Square,
+  Move,
+  isLegalMove,
+  applyMoveToFen,
+} from '../utils/chess-helpers';
 import { Puzzle } from '../types/puzzle';
 
 interface UsePuzzleState {
   board: (Piece | null)[][];
+  fen: string;
   selectedSquare: Square | null;
   currentMoveIndex: number;
   isComplete: boolean;
@@ -30,6 +37,7 @@ function applyMove(board: (Piece | null)[][], move: Move): (Piece | null)[][] {
 export function usePuzzle(puzzle: Puzzle) {
   const [state, setState] = useState<UsePuzzleState>({
     board: puzzle.board.map((row) => [...row]),
+    fen: puzzle.fen,
     selectedSquare: null,
     currentMoveIndex: 0,
     isComplete: false,
@@ -70,12 +78,14 @@ export function usePuzzle(puzzle: Puzzle) {
     opponentMoveTimeoutRef.current = setTimeout(() => {
       setState((prev) => {
         const newBoard = applyMove(prev.board, opponentMove);
+        const newFen = applyMoveToFen(prev.fen, opponentMove) || prev.fen;
         const nextMoveIndex = prev.currentMoveIndex + 1;
         const isComplete = nextMoveIndex >= puzzle.solution.length;
 
         return {
           ...prev,
           board: newBoard,
+          fen: newFen,
           currentMoveIndex: nextMoveIndex,
           isComplete,
           isOpponentMoving: false,
@@ -114,6 +124,13 @@ export function usePuzzle(puzzle: Puzzle) {
 
         // Try to make a move
         const move: Move = { from: prev.selectedSquare, to: square };
+
+        // First, validate that this is a legal move using chess.js
+        if (!isLegalMove(prev.fen, move)) {
+          // Illegal move - deselect without penalty
+          return { ...prev, selectedSquare: null };
+        }
+
         const expectedMove = puzzle.solution[prev.currentMoveIndex];
 
         if (
@@ -124,11 +141,13 @@ export function usePuzzle(puzzle: Puzzle) {
         ) {
           // Correct move!
           const newBoard = applyMove(prev.board, move);
+          const newFen = applyMoveToFen(prev.fen, move) || prev.fen;
           const nextMoveIndex = prev.currentMoveIndex + 1;
           const isComplete = nextMoveIndex >= puzzle.solution.length;
 
           return {
             board: newBoard,
+            fen: newFen,
             selectedSquare: null,
             currentMoveIndex: nextMoveIndex,
             isComplete,
@@ -138,7 +157,7 @@ export function usePuzzle(puzzle: Puzzle) {
             feedback: isComplete ? 'Great job!' : 'Good move!',
           };
         } else {
-          // Wrong move
+          // Wrong move (but legal) - give feedback
           return {
             ...prev,
             selectedSquare: null,
@@ -158,6 +177,7 @@ export function usePuzzle(puzzle: Puzzle) {
     }
     setState({
       board: puzzle.board.map((row) => [...row]),
+      fen: puzzle.fen,
       selectedSquare: null,
       currentMoveIndex: 0,
       isComplete: false,
@@ -182,12 +202,14 @@ export function usePuzzle(puzzle: Puzzle) {
       if (!nextMove) return prev;
 
       const newBoard = applyMove(prev.board, nextMove);
+      const newFen = applyMoveToFen(prev.fen, nextMove) || prev.fen;
       const nextMoveIndex = prev.currentMoveIndex + 1;
       const isComplete = nextMoveIndex >= puzzle.solution.length;
 
       return {
         ...prev,
         board: newBoard,
+        fen: newFen,
         currentMoveIndex: nextMoveIndex,
         isComplete,
         isShowingSolution: true,
@@ -202,13 +224,16 @@ export function usePuzzle(puzzle: Puzzle) {
 
       // Apply all remaining moves
       let newBoard = prev.board;
+      let newFen = prev.fen;
       for (let i = prev.currentMoveIndex; i < puzzle.solution.length; i++) {
         newBoard = applyMove(newBoard, puzzle.solution[i]);
+        newFen = applyMoveToFen(newFen, puzzle.solution[i]) || newFen;
       }
 
       return {
         ...prev,
         board: newBoard,
+        fen: newFen,
         currentMoveIndex: puzzle.solution.length,
         isComplete: true,
         isShowingSolution: true,

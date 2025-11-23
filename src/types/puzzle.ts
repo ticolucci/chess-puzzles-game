@@ -4,6 +4,7 @@ export interface Puzzle {
   id: string;
   title: string;
   difficulty: 'easy' | 'medium' | 'hard';
+  fen: string;
   board: (Piece | null)[][];
   playerColor: 'white' | 'black';
   solution: Move[];
