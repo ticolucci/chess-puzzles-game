@@ -10,6 +10,7 @@ export const theme = {
     lightSquare: '#F0D9B5',
     darkSquare: '#B58863',
     highlight: '#FFFF00',
+    validMove: '#5B9BD5',
     background: '#E8F4FD',
   },
   spacing: {

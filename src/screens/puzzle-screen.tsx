@@ -23,6 +23,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
     board,
     selectedSquare,
     highlightedSquares,
+    validMoveSquares,
     selectSquare,
     isComplete,
     isWrong,
@@ -49,6 +50,7 @@ export function PuzzleScreen({ navigation, route }: PuzzleScreenProps) {
           board={board}
           selectedSquare={selectedSquare}
           highlightedSquares={highlightedSquares}
+          validMoveSquares={validMoveSquares}
           onSquarePress={selectSquare}
         />
 

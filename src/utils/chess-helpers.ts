@@ -162,3 +162,23 @@ export function applyMoveToFen(fen: string, move: Move): string | null {
     return null;
   }
 }
+
+/**
+ * Gets all valid move destinations for a piece using chess.js
+ * Used for highlighting valid moves on the board
+ * @param fen The current position in FEN format
+ * @param square The square of the piece to get moves for
+ * @returns Array of valid destination squares
+ */
+export function getValidMoves(fen: string, square: Square): Square[] {
+  try {
+    const chess = new Chess(fen);
+    const from = squareToNotation(square);
+
+    // Get all legal moves from this square
+    const legalMoves = chess.moves({ square: from, verbose: true });
+    return legalMoves.map((m) => notationToSquare(m.to));
+  } catch {
+    return [];
+  }
+}
