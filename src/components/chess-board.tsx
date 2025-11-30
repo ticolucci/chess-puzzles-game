@@ -1,4 +1,5 @@
-import { View, StyleSheet, useMemo } from 'react-native';
+import { useMemo } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { ChessSquare } from './chess-square';
 import { ChessPiece } from './chess-piece';
 import { Piece, Square } from '../utils/chess-helpers';

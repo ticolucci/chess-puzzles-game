@@ -128,12 +128,10 @@ export function usePuzzle(puzzle: Puzzle) {
 
         // First, validate that this is a legal move using chess.js
         if (!isLegalMove(prev.fen, move)) {
-          // Illegal move - show feedback
+          // Illegal move - silently reject by just deselecting
           return {
             ...prev,
             selectedSquare: null,
-            isWrong: true,
-            feedback: 'That piece cannot move there!',
           };
         }
 

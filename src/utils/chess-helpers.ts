@@ -176,8 +176,8 @@ export function getValidMoves(fen: string, square: Square): Square[] {
     const from = squareToNotation(square);
 
     // Get all legal moves from this square
-    const legalMoves = chess.moves({ square: from, verbose: true });
-    return legalMoves.map((m) => notationToSquare(m.to));
+    const legalMoves = chess.moves({ verbose: true, square: from as any });
+    return legalMoves.map((m: any) => notationToSquare(m.to));
   } catch {
     return [];
   }
